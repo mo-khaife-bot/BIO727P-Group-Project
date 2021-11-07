@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+<doctype html>
+<title>Results Substrates</title>
+<head>
+    <script src="http://ebi-uniprot.github.io/CDN/protvista/protvista.js"></script>
+    <script type=”text/javascript” src=”http://www.ncbi.nlm.nih.gov/projects/sviewer/js/sviewer.js”></script>
+
+    <link href="http://ebi-uniprot.github.io/CDN/protvista/main.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/static/tabs.css">
+
+    <!-- protVista Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  </head>
+
+
+
+  <body>
+
+
+
+  <div class="w3-card-4 w3-margin w3-white" style="color: #000;">
+      <div class="w3-container" >
+        <br>
+
+        <center> <h3><b></b></h3> <center>
+      </div>
+   <!-- Define tabs -->
+  <div class="tabset">
+    <!-- General Info -->
+    <input type="radio" name="tabset" id="tab1" style="color: #06c;" aria-controls="info" checked>
+    <label for="tab1">General Information</label>
+    <!-- Genome Browser -->
+    <input type="radio" name="tabset" id="tab2" aria-controls="annot">
+    <label for="tab2">Genome Browser</label>
+
+
+  <!-- Define Tab Panels -->
+    <div class="tab-panels">
+      <!-- General Information -->
+      <section id="info" class="tab-panel">
+       <table class="table table-hover">
+               <tr>
+                <th id="sub">Substrate</th>
+                <th id="phos" >Accession Number </th>
+                <th >Phosphorylator</th>
+                <th >Modified Residue</th>
+                <th>Site of Phosphorylation</th>
+                <th>Chromosome Number</th>
+                <th>Chromosome Region</th>
+               </tr>
+
+            {% for x in results %}
+                <td >{{ x.Substrate_Symbol.upper()  }}</td>
+                <td><a href="https://www.uniprot.org/uniprot/{{x.Sub_ACC_ID  }}">{{ x.Sub_ACC_ID }}</a></td>
+                <td >{{ x.Kinase.upper() }}</td>
+                <td >{{ x.Sub_Mod_Rsd }}</td>
+                <td >{{x.Site_AA }}</td>
+                <td >{{ x.Chromosome }}</td>
+                <td>{{ x.Leg }}</td>
+                </tr>
+            {% endfor %}
+
+        </table>
+      </section>
+
+      <!-- Genome Browser -->
+      <section id="annot" class="tab-panel">
+        <center>
+          <header class="w3-center w3-margin-bottom" style="color: #000;">
+              <p>To visualise the neighbouring genes and sequences surrounding a phosphosite, please search for your phosphorite of interest in the UCSC search bar by its accession number or substrate name. From the drop down suggestions make sure to click on the "human" version of your phosphosite of interest. Click "Go". To see individual phosphosites, hover your cursor over the modified residue track markings. </p>
+              <br>
+              <iframe src="https://genome-euro.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A11102837%2D11267747&hgsid=235684767_bxBepybLAlvefdgPeSdsNaGQZDN4" width="1430" height="340" frameborder="0"></iframe>
+              <br>
+
+      </section>
+
+
+
+         
+
+{% endblock %}

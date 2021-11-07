@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<title> Inhibitor Search Results</title>
+<head>
+    <!-- link Stylesheets for the tabs style sheet -->
+    <link rel="stylesheet" type="text/css" href="/static/tabs.css">
+</head>
+
+  <div class="w3-card-4 w3-margin w3-white" style="color: #000;">
+      <div class="w3-container">
+<!-- loop through results -->
+{% if results %}
+  {% for x in results %}
+
+        <center> <h3><b>{{ x.CHEMBLID }}</b></h3> <center>
+        <h5> <span class="w3-blue"><td>{{ x.Inhibitor_Name }}</td></span></h5>
+
+      </div>
+
+  <!-- Define Tab  -->
+  <div class="tabset">
+    <!-- Tab 1 -->
+    <input type="radio" name="tabset" id="tab1" aria-controls="info" checked>
+    <label for="tab1">{{ x.Inhibitor_Name }} Properties</label>
+
+  <!-- Define Tab Panels  -->
+    <div class="tab-panels">
+      <!-- General Information  tab panels -->
+      <section id="info" class="tab-panel">
+        <h4 class="w3-border-bottom w3-border-light-gray w3-padding-12 w3-cyan">{{ x.Inhibitor_Name }} Properties </h4>
+
+        <!-- figure for chembl structure-->
+        <figure style="">
+            <img src="{{ x.Image_link }}" style="width:300px;height:300px;border:1px solid grey" alt='missing' />
+            <figcaption>{{ x.CHEMBLID }}</figcaption>
+        </figure>
+        <br>
+
+        <h5> Inhibitor Name: <span class="w3-opacity"><td>{{ x.Inhibitor_Name }}</td></span>
+        <h5> Kinase Targets: <span class="w3-opacity"><td>{{ x.Kinase_Target }}</td></span>
+        <h5> Canonical Smiles: <span class="w3-opacity"><td>{{ x.Smiles }}</td></span>
+        <h5> Standard InCHI Key: <span class="w3-opacity"><td>{{ x.InCHI_Key }}</td></span>
+        <h5> Kinase Family: <span class="w3-opacity"><td>{{ x.Kinase_Families }}</td></span>
+        <h5> Chirality: <span class="w3-opacity"><td>{{ x.Chirality }}</td></span>
+        <h5> Synonyms: <span class="w3-opacity"><td>{{ x.Inhibitor_Synonyms }}</td></span>
+        <h5> Brand Name: <span class="w3-opacity"><td>{{ x.Brand_Name }}</td></span>
+        <br>
+        <br>
+        <br>
+        <h4 class="w3-border-bottom w3-border-blue-gray w3-padding-12 w3-light-cyan">External Research</h4>
+        <br>
+        <h5> PDBID: <span class="w3-opacity"><td><a href="https://www.rcsb.org/structure/{{ x.PDBID }}">{{ x.PDBID }}</a></td></span>
+        <h5> LigID: <span class="w3-opacity"><td><a href="http://www.rcsb.org/ligand/{{x.LigID }}">{{ x.LigID }}</a></td></span>
+        <h5> ChEMBL ID : <span class="w3-opacity"><td><a href="https://www.ebi.ac.uk/chembl/compound_report_card/{{x.CHEMBLID }}">{{ x.CHEMBLID }}</a></td></span>
+        <br>
+        <br>
+        <h4 class="w3-border-bottom w3-border-light-grey w3-padding-12 w3-light-grey">{{ x.Inhibitor_Name }} Properties </h4>
+        <div class="container">
+          <table class="zui-table" align="left">   <!-- use the zui table style sheet -->
+              <thead>
+                  <tr>
+                      <th>RoF</th>
+                      <th>MW</th>
+                      <th>LogP</th>
+                      <th>TPSA</th>
+                      <th>HBA</th>
+                      <th>HBD</th>
+                      <th>NRB</th>
+                      <th>Type</th>
+                      <th>Phase</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>{{ x.RoF }}</td>
+                      <td>{{ x.MW }}</td>
+                      <td>{{ x.LogP }}</td>
+                      <td>{{ x.TPSA }}</td>
+                      <td>{{ x.HBA }}</td>
+                      <td>{{ x.HBD }}</td>
+                      <td>{{ x.NRB}}</td>
+                      <td>{{ x.Type}}</td>
+                      <td>{{ x.Phase}}</td>
+                  </tr>
+              </tbody>
+          </table>
+          <br><br><br><br><br><br><br><br><br>
+
+  </section>
+
+        
+
+      </section>
+        </div>
+
+        </div>
+  {% endfor %}
+{% endif %}
+{% endblock %}
